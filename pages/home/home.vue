@@ -35,13 +35,14 @@
         <view class="floor-img-box">
           <!-- 左侧大图片的盒子 -->
           <view class="left-img-box">
-            <image class="left-img" :src="item.product_list[0].image_src"
-              :style="{width: item.product_list[0].image_width + 'rpx'}"></image>
+            <image @click="GoodList(item.product_list[0].navigator_url)" class="left-img"
+              :src="item.product_list[0].image_src" :style="{width: item.product_list[0].image_width + 'rpx'}"></image>
           </view>
           <!-- 右侧 4 个小图片的盒子 -->
           <view class="right-img-box">
             <view class="right-img-item" v-for="(item2, i2) in item.product_list" :key="i2" v-if="i2 !== 0">
-              <image :src="item2.image_src" mode="widthFix" :style="{width: item2.image_width + 'rpx'}"></image>
+              <image @click="GoodList(item2.navigator_url)" :src="item2.image_src" mode="widthFix"
+                :style="{width: item2.image_width + 'rpx'}"></image>
             </view>
           </view>
         </view>
@@ -87,6 +88,12 @@
         const res = await getfloors()
         console.log(res)
         this.floorList = res
+      },
+      GoodList(url) {
+        console.log((url.split('?')[1]))
+        uni.navigateTo({
+          url: '/subpkg/god_list/god_list?' + url.split('?')[1]
+        })
       },
       clickNavs(item) {
         if (item.name === '分类') {
